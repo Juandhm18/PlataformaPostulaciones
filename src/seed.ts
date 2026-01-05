@@ -53,7 +53,7 @@ async function bootstrap() {
         {
             title: 'Senior Node.js Architect',
             description: 'Lead the design of our next-generation cloud infrastructure. Master of the asynchronous arts required.',
-            technologies: 'Node.js, TypeScript, AWS, PostgreSQL',
+            technologies: ['Node.js', 'TypeScript', 'AWS', 'PostgreSQL'],
             seniority: 'Senior',
             softSkills: 'Leadership, Communication, Mentoring',
             location: 'Kyoto (Remote)',
@@ -66,7 +66,7 @@ async function bootstrap() {
         {
             title: 'Principal React Engineer',
             description: 'Craft beautiful, high-performance user interfaces with the precision of a katana. Experience with React 19 and Framer Motion.',
-            technologies: 'React, Vite, Tailwind CSS, TypeScript',
+            technologies: ['React', 'Vite', 'Tailwind CSS', 'TypeScript'],
             seniority: 'Principal',
             softSkills: 'Design Thinking, Adaptability, Detail-oriented',
             location: 'Tokyo (Hybrid)',
@@ -79,7 +79,7 @@ async function bootstrap() {
         {
             title: 'Staff DevOps Sorcerer',
             description: 'Automate our destiny. We need a master of Kubernetes and Terraform to build immutable temples in the cloud.',
-            technologies: 'Kubernetes, Terraform, GitHub Actions, Docker',
+            technologies: ['Kubernetes', 'Terraform', 'GitHub Actions', 'Docker'],
             seniority: 'Staff',
             softSkills: 'Problem Solving, Collaboration, Persistence',
             location: 'Osaka (On-site)',
@@ -92,7 +92,7 @@ async function bootstrap() {
         {
             title: 'Full Stack Ninja',
             description: 'Shadowy operations across the entire stack. From PostgreSQL shadows to the bright light of Frontend.',
-            technologies: 'Next.js, Prisma, GraphQL, Apollo',
+            technologies: ['Next.js', 'Prisma', 'GraphQL', 'Apollo'],
             seniority: 'Senior',
             softSkills: 'Versatility, Critical Thinking, Efficiency',
             location: 'Remote',

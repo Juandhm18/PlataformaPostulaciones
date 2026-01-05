@@ -5,11 +5,16 @@ export interface User {
     role: 'admin' | 'gestor' | 'coder';
 }
 
+export interface Technology {
+    id: number;
+    name: string;
+}
+
 export interface Vacancy {
     id: number;
     title: string;
     description: string;
-    technologies: string;
+    technologies: Technology[];
     seniority: string;
     softSkills: string;
     location: string;

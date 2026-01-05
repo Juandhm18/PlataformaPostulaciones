@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsEnum, IsNumber, Min } from 'class-validator';
+import { IsString, IsNotEmpty, IsEnum, IsNumber, Min, IsArray } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { VacancyModality } from '../entities/vacancy.entity';
 
@@ -13,10 +13,11 @@ export class CreateVacancyDto {
     @IsNotEmpty()
     description: string;
 
-    @ApiProperty({ example: 'Java, Spring Boot, PostgreSQL' })
-    @IsString()
+    @ApiProperty({ example: ['Java', 'Spring Boot', 'PostgreSQL'] })
+    @IsArray()
+    @IsString({ each: true })
     @IsNotEmpty()
-    technologies: string;
+    technologies: string[];
 
     @ApiProperty({ example: 'Senior' })
     @IsString()

@@ -46,8 +46,8 @@ describe('ApplicationsService', () => {
 
     describe('create', () => {
         it('should create an application if checks pass', async () => {
-            const vacancyId = 'v1';
-            const userId = 'u1';
+            const vacancyId = 1;
+            const userId = 1;
 
             const vacancy = { id: vacancyId, isActive: true, maxApplicants: 5 };
             mockVacanciesService.findOne.mockResolvedValue(vacancy);
@@ -61,24 +61,24 @@ describe('ApplicationsService', () => {
             mockAppRepo.findOne.mockResolvedValue(null);
 
             mockAppRepo.create.mockReturnValue({ userId, vacancyId });
-            mockAppRepo.save.mockResolvedValue({ id: 'a1', userId, vacancyId });
+            mockAppRepo.save.mockResolvedValue({ id: 1, userId, vacancyId });
 
             const result = await service.create(userId, { vacancyId });
 
-            expect(result).toEqual({ id: 'a1', userId, vacancyId });
+            expect(result).toEqual({ id: 1, userId, vacancyId });
         });
 
         it('should fail if vacancy inactive', async () => {
             mockVacanciesService.findOne.mockResolvedValue({ isActive: false });
-            await expect(service.create('u1', { vacancyId: 'v1' })).rejects.toThrow(BadRequestException);
+            await expect(service.create(1, { vacancyId: 1 })).rejects.toThrow(BadRequestException);
         });
 
         it('should fail if vacancy is full', async () => {
-            const vacancy = { id: 'v1', isActive: true, maxApplicants: 1 };
+            const vacancy = { id: 1, isActive: true, maxApplicants: 1 };
             mockVacanciesService.findOne.mockResolvedValue(vacancy);
             mockAppRepo.count.mockResolvedValueOnce(1); // apps check
 
-            await expect(service.create('u1', { vacancyId: 'v1' })).rejects.toThrow(BadRequestException);
+            await expect(service.create(1, { vacancyId: 1 })).rejects.toThrow(BadRequestException);
         });
     });
 });

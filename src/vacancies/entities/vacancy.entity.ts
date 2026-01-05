@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 import { Application } from '../../applications/entities/application.entity';
+import { Technology } from '../../technologies/entities/technology.entity';
 
 export enum VacancyModality {
     REMOTE = 'remote',
@@ -18,8 +19,13 @@ export class Vacancy {
     @Column('text')
     description: string;
 
-    @Column()
-    technologies: string; // Comma-separated or just string description
+    @ManyToMany(() => Technology, (technology) => technology.vacancies, { cascade: true })
+    @JoinTable({
+        name: 'vacancy_technologies',
+        joinColumn: { name: 'vacancy_id', referencedColumnName: 'id' },
+        inverseJoinColumn: { name: 'technology_id', referencedColumnName: 'id' },
+    })
+    technologies: Technology[];
 
     @Column()
     seniority: string;

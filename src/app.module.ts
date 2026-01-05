@@ -15,6 +15,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ApiKeyGuard } from './auth/guards/api-key.guard';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { TechnologiesModule } from './technologies/technologies.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { join } from 'path';
     UsersModule,
     VacanciesModule,
     ApplicationsModule,
+    TechnologiesModule,
   ],
   controllers: [AppController],
   providers: [

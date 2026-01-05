@@ -4,35 +4,56 @@ import { UpdateVacancyDto } from './dto/update-vacancy.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Vacancy } from './entities/vacancy.entity';
 import { Repository } from 'typeorm';
+import { TechnologiesService } from '../technologies/technologies.service';
 
 @Injectable()
 export class VacanciesService {
   constructor(
     @InjectRepository(Vacancy)
     private vacanciesRepository: Repository<Vacancy>,
+    private technologiesService: TechnologiesService,
   ) { }
 
   async create(createVacancyDto: CreateVacancyDto) {
-    const vacancy = this.vacanciesRepository.create(createVacancyDto);
+    const { technologies, ...vacancyData } = createVacancyDto;
+
+    const techEntities = await this.technologiesService.findOrCreateMany(technologies);
+
+    const vacancy = this.vacanciesRepository.create({
+      ...vacancyData,
+      technologies: techEntities,
+    });
+
     return await this.vacanciesRepository.save(vacancy);
   }
 
   async findAll() {
     return await this.vacanciesRepository.find({
+      relations: ['technologies'],
       order: { createdAt: 'DESC' },
     });
   }
 
   async findOne(id: number) {
-    const vacancy = await this.vacanciesRepository.findOneBy({ id });
+    const vacancy = await this.vacanciesRepository.findOne({
+      where: { id },
+      relations: ['technologies'],
+    });
     if (!vacancy) throw new NotFoundException('Vacancy not found');
     return vacancy;
   }
 
   async update(id: number, updateVacancyDto: UpdateVacancyDto) {
-    await this.findOne(id); // Check existence
-    await this.vacanciesRepository.update(id, updateVacancyDto);
-    return this.findOne(id);
+    const vacancy = await this.findOne(id);
+    const { technologies, ...updateData } = updateVacancyDto;
+
+    if (technologies) {
+      const techEntities = await this.technologiesService.findOrCreateMany(technologies);
+      vacancy.technologies = techEntities;
+    }
+
+    Object.assign(vacancy, updateData);
+    return await this.vacanciesRepository.save(vacancy);
   }
 
   async remove(id: number) {

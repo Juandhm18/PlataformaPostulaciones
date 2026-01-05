@@ -1,29 +1,30 @@
-import { IsString, IsNotEmpty, IsEnum, IsNumber, Min } from 'class-validator';
+import { IsString, IsNotEmpty, IsEnum, IsNumber, Min, IsArray } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { VacancyModality } from '../entities/vacancy.entity';
 
 export class CreateVacancyDto {
-    @ApiProperty({ example: 'Backend Developer' })
+    @ApiProperty({ example: 'Desarrollador Backend java' })
     @IsString()
     @IsNotEmpty()
     title: string;
 
-    @ApiProperty({ example: 'We are looking for a Node.js developer...' })
+    @ApiProperty({ example: 'Estamos buscando un desarrollador Java con experiencia...' })
     @IsString()
     @IsNotEmpty()
     description: string;
 
-    @ApiProperty({ example: 'Node.js, NestJS, PostgreSQL' })
-    @IsString()
+    @ApiProperty({ example: ['Java', 'Spring Boot', 'PostgreSQL'] })
+    @IsArray()
+    @IsString({ each: true })
     @IsNotEmpty()
-    technologies: string;
+    technologies: string[];
 
-    @ApiProperty({ example: 'Junior' })
+    @ApiProperty({ example: 'Senior' })
     @IsString()
     @IsNotEmpty()
     seniority: string;
 
-    @ApiProperty({ example: 'Teamwork, Communication' })
+    @ApiProperty({ example: 'Trabajo en equipo, Comunicación asertiva' })
     @IsString()
     @IsNotEmpty()
     softSkills: string;

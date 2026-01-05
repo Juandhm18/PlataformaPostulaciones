@@ -14,7 +14,7 @@ export class ApplicationsService {
     private vacanciesService: VacanciesService,
   ) { }
 
-  async create(userId: string, createApplicationDto: CreateApplicationDto) {
+  async create(userId: number, createApplicationDto: CreateApplicationDto) {
     const { vacancyId } = createApplicationDto;
 
     // 1. Check if vacancy exists and is active
@@ -84,7 +84,7 @@ export class ApplicationsService {
     return await this.applicationsRepository.find(options);
   }
 
-  async findOne(id: string) {
+  async findOne(id: number) {
     const application = await this.applicationsRepository.findOne({
       where: { id },
       relations: ['user', 'vacancy'],

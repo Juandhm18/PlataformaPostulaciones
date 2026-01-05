@@ -37,21 +37,21 @@ export class VacanciesController {
   @Get(':id')
   @ApiOperation({ summary: 'Get a vacancy by ID' })
   findOne(@Param('id') id: string) {
-    return this.vacanciesService.findOne(id);
+    return this.vacanciesService.findOne(+id);
   }
 
   @Patch(':id')
   @Roles(UserRole.GESTOR, UserRole.ADMIN)
   @ApiOperation({ summary: 'Update a vacancy (Manager only)' })
   update(@Param('id') id: string, @Body() updateVacancyDto: UpdateVacancyDto) {
-    return this.vacanciesService.update(id, updateVacancyDto);
+    return this.vacanciesService.update(+id, updateVacancyDto);
   }
 
   @Patch(':id/toggle-status')
   @Roles(UserRole.GESTOR, UserRole.ADMIN)
   @ApiOperation({ summary: 'Toggle vacancy status (Active/Inactive) (Manager only)' })
   toggleStatus(@Param('id') id: string) {
-    return this.vacanciesService.toggleStatus(id);
+    return this.vacanciesService.toggleStatus(+id);
   }
 
   @Delete(':id')
@@ -59,6 +59,6 @@ export class VacanciesController {
   // Let's restrict Delete to Admin just in case.
   @ApiOperation({ summary: 'Delete a vacancy (Admin only)' })
   remove(@Param('id') id: string) {
-    return this.vacanciesService.remove(id);
+    return this.vacanciesService.remove(+id);
   }
 }

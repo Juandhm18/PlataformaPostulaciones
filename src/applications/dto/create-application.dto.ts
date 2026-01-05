@@ -1,9 +1,9 @@
-import { IsString, IsNotEmpty, IsUUID } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateApplicationDto {
-    @ApiProperty({ example: 'vacancy-uuid-1234' })
-    @IsUUID()
+    @ApiProperty({ example: 1 })
+    @IsNumber()
     @IsNotEmpty()
-    vacancyId: string;
+    vacancyId: number;
 }

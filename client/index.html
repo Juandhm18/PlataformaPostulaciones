@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vacancies Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto p-4">
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-indigo-600">Postulation Platform</h1>
+            <div id="authSection">
+                <button onclick="showLogin()" class="text-gray-600 hover:text-indigo-600">Login</button>
+                <button onclick="showRegister()" class="ml-4 bg-indigo-600 text-white px-4 py-2 rounded">Register</button>
+            </div>
+            <div id="userSection" class="hidden flex items-center gap-4">
+                <span id="userName" class="font-semibold"></span>
+                <button onclick="logout()" class="text-red-500">Logout</button>
+            </div>
+        </header>
+
+        <!-- Messages -->
+        <div id="messageBox" class="hidden mb-4 p-4 rounded text-center"></div>
+
+        <!-- Auth Forms -->
+        <div id="authForms" class="max-w-md mx-auto bg-white p-6 rounded shadow hidden">
+            <h2 id="formTitle" class="text-xl font-bold mb-4">Login</h2>
+            <form id="authForm" onsubmit="handleAuth(event)">
+                <div class="mb-4" id="nameField" style="display: none;">
+                    <label class="block text-gray-700">Name</label>
+                    <input type="text" id="name" class="w-full border p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Email</label>
+                    <input type="email" id="email" class="w-full border p-2 rounded" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Password</label>
+                    <input type="password" id="password" class="w-full border p-2 rounded" required>
+                </div>
+                <!-- Role Select for Register -->
+                <div class="mb-4" id="roleField" style="display: none;">
+                    <label class="block text-gray-700">Role</label>
+                    <select id="role" class="w-full border p-2 rounded">
+                        <option value="coder">Coder</option>
+                        <option value="gestor">Gestor</option> <!-- Usually Gestor creation is restricted, but for demo -->
+                    </select>
+                </div>
+
+                <input type="hidden" id="authType" value="login">
+                <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">Submit</button>
+            </form>
+        </div>
+
+        <!-- Vacancy List -->
+        <div id="vacancySection" class="hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold">Available Vacancies</h2>
+                <button id="createVacancyBtn" onclick="showCreateVacancy()" class="hidden bg-green-600 text-white px-4 py-2 rounded">Create Vacancy</button>
+            </div>
+            
+            <!-- Create Vacancy Form -->
+            <div id="createVacancyForm" class="hidden max-w-2xl mx-auto bg-white p-6 rounded shadow mb-8">
+                 <h3 class="text-lg font-bold mb-4">New Vacancy</h3>
+                 <form onsubmit="handleCreateVacancy(event)">
+                     <input type="text" id="vTitle" placeholder="Title" class="w-full border p-2 rounded mb-2" required>
+                     <textarea id="vDesc" placeholder="Description" class="w-full border p-2 rounded mb-2" required></textarea>
+                     <input type="text" id="vTech" placeholder="Technologies" class="w-full border p-2 rounded mb-2" required>
+                     <input type="text" id="vCompany" placeholder="Company" class="w-full border p-2 rounded mb-2" required>
+                     <input type="text" id="vLoc" placeholder="Location" class="w-full border p-2 rounded mb-2" required>
+                     <input type="text" id="vSeniority" placeholder="Seniority" class="w-full border p-2 rounded mb-2" required>
+                     <input type="text" id="vSoft" placeholder="Soft Skills" class="w-full border p-2 rounded mb-2" required>
+                     <input type="text" id="vSal" placeholder="Salary Range" class="w-full border p-2 rounded mb-2" required>
+                     <select id="vMod" class="w-full border p-2 rounded mb-2">
+                         <option value="remote">Remote</option>
+                         <option value="hybrid">Hybrid</option>
+                         <option value="onsite">Onsite</option>
+                     </select>
+                     <input type="number" id="vMax" placeholder="Max Applicants" class="w-full border p-2 rounded mb-2" required min="1">
+                     <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Publish</button>
+                     <button type="button" onclick="hideCreateVacancy()" class="text-gray-500 ml-2">Cancel</button>
+                 </form>
+            </div>
+
+            <div id="vacanciesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Vacancies injected here -->
+            </div>
+        </div>
+
+        <!-- Applications List (Simple view) -->
+        <div id="applicationsSection" class="hidden mt-8">
+            <h2 class="text-2xl font-bold mb-4">My Applications</h2>
+            <div id="applicationsGrid" class="space-y-4"></div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

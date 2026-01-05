@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { Seeder, SeederFactoryManager } from 'typeorm-extension';
-import { User, UserRole } from '../src/users/entities/user.entity';
+import { User, UserRole } from '../../users/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 
 export default class InitSeeder implements Seeder {
@@ -21,7 +21,7 @@ export default class InitSeeder implements Seeder {
                 password: hashedPassword,
                 role: UserRole.ADMIN,
             });
-            console.log('✅ Admin user created');
+            console.log('Admin user created');
         }
 
         const gestorEmail = 'gestor@riwi.io';
@@ -35,7 +35,7 @@ export default class InitSeeder implements Seeder {
                 password: hashedPassword,
                 role: UserRole.GESTOR,
             });
-            console.log('✅ Gestor user created');
+            console.log('[INFO] Gestor user created');
         }
     }
 }

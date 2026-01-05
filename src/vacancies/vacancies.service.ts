@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateVacancyDto } from './dto/create-vacancy.dto';
 import { UpdateVacancyDto } from './dto/update-vacancy.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Vacancy } from './entities/vacancy.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class VacanciesService {
-  create(createVacancyDto: CreateVacancyDto) {
-    return 'This action adds a new vacancy';
+  constructor(
+    @InjectRepository(Vacancy)
+    private vacanciesRepository: Repository<Vacancy>,
+  ) { }
+
+  async create(createVacancyDto: CreateVacancyDto) {
+    const vacancy = this.vacanciesRepository.create(createVacancyDto);
+    return await this.vacanciesRepository.save(vacancy);
   }
 
-  findAll() {
-    return `This action returns all vacancies`;
+  async findAll() {
+    return await this.vacanciesRepository.find({
+      order: { createdAt: 'DESC' },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} vacancy`;
+  async findOne(id: string) {
+    const vacancy = await this.vacanciesRepository.findOneBy({ id });
+    if (!vacancy) throw new NotFoundException('Vacancy not found');
+    return vacancy;
   }
 
-  update(id: number, updateVacancyDto: UpdateVacancyDto) {
-    return `This action updates a #${id} vacancy`;
+  async update(id: string, updateVacancyDto: UpdateVacancyDto) {
+    await this.findOne(id); // Check existence
+    await this.vacanciesRepository.update(id, updateVacancyDto);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} vacancy`;
+  async remove(id: string) {
+    await this.findOne(id); // Check existence
+    await this.vacanciesRepository.delete(id);
+    return { message: 'Vacancy removed' };
+  }
+
+  async toggleStatus(id: string) {
+    const vacancy = await this.findOne(id);
+    vacancy.isActive = !vacancy.isActive;
+    return await this.vacanciesRepository.save(vacancy);
   }
 }

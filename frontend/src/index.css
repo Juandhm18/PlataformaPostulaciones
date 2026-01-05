@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --font-jp-serif: "Noto Serif JP", serif;
+  --font-jp-sans: "Zen Kaku Gothic New", sans-serif;
+
+  /* Zen Night Palette */
+  --color-obsidian: #0D0D0D;
+  --color-charcoal: #1A1A1A;
+  --color-slate-dark: #2D3436;
+  --color-gold-muted: #D4AF37;
+  --color-silver-mist: #E0E0E0;
+  --color-hanko-red: #C0392B;
+  --color-bamboo-dark: #34495E;
+}
+
+@layer base {
+  body {
+    @apply bg-obsidian text-silver-mist font-jp-sans tracking-wide;
+    background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0d0d0d 100%);
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-jp-serif text-gold-muted;
+  }
+}
+
+@layer components {
+  .btn-zen {
+    @apply bg-gold-muted text-obsidian px-6 py-2 text-sm uppercase tracking-widest hover:bg-gold-muted/80 transition duration-300 rounded-sm font-bold shadow-lg hover:shadow-gold-muted/20;
+  }
+
+  .btn-zen-secondary {
+    @apply border border-gold-muted text-gold-muted px-6 py-2 text-sm uppercase tracking-widest hover:bg-gold-muted hover:text-obsidian transition duration-300 rounded-sm;
+  }
+
+  .input-zen {
+    @apply w-full border-b border-bamboo-dark bg-transparent py-2 focus:outline-none focus:border-gold-muted transition text-silver-mist placeholder:text-gray-600;
+  }
+
+  .card-zen {
+    @apply bg-charcoal p-8 border border-white/5 shadow-2xl hover:border-gold-muted/30 transition duration-500 rounded-md backdrop-blur-sm;
+  }
+
+  .nav-link-zen {
+    @apply text-silver-mist/60 hover:text-gold-muted transition duration-300 text-sm uppercase tracking-widest;
+  }
+}

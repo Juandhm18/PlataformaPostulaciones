@@ -17,8 +17,8 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('Vacancy Postulation Platform')
-    .setDescription('API for managing employability vacancies and coder applications')
+    .setTitle('Plataforma de Postulaciones RIWI')
+    .setDescription('API para la gestión de vacantes y postulaciones de coders. Requiere x-api-key en los headers para todos los endpoints y Authorization Bearer para endpoints protegidos.')
     .setVersion('1.0')
     .addBearerAuth()
     .addApiKey({ type: 'apiKey', name: 'x-api-key', in: 'header' }, 'x-api-key')

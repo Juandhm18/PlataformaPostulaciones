@@ -4,14 +4,14 @@ import { Vacancy } from '../../vacancies/entities/vacancy.entity';
 
 @Entity('applications')
 export class Application {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+    @PrimaryGeneratedColumn('increment')
+    id: number;
 
     @Column()
-    userId: string;
+    userId: number;
 
     @Column()
-    vacancyId: string;
+    vacancyId: number;
 
     @ManyToOne(() => User, (user) => user.applications)
     @JoinColumn({ name: 'userId' })

@@ -29,6 +29,6 @@ export class ApplicationsController {
   @Roles(UserRole.ADMIN, UserRole.GESTOR) // Maybe Coder can see their own? For now restrict.
   @ApiOperation({ summary: 'Get application details' })
   findOne(@Param('id') id: string) {
-    return this.applicationsService.findOne(id);
+    return this.applicationsService.findOne(+id);
   }
 }

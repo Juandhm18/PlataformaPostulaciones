@@ -3,12 +3,12 @@ import { UserRole } from '../entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
-    @ApiProperty({ example: 'John Doe' })
+    @ApiProperty({ example: 'Juan Perez' })
     @IsString()
     @IsNotEmpty()
     name: string;
 
-    @ApiProperty({ example: 'john@example.com' })
+    @ApiProperty({ example: 'juan@example.com' })
     @IsEmail()
     @IsNotEmpty()
     email: string;

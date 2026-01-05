@@ -9,8 +9,8 @@ export enum VacancyModality {
 
 @Entity('vacancies')
 export class Vacancy {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+    @PrimaryGeneratedColumn('increment')
+    id: number;
 
     @Column()
     title: string;

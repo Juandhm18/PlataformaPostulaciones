@@ -1,91 +1,89 @@
 # Vacancy Postulation Platform
 
-A REST API built with **Node.js** and **NestJS** to manage employability vacancies and coder applications centrally.
+A robust REST API built with NestJS to manage employability vacancies and the application process, featuring a role-based access control system and a lightweight frontend client.
 
-## 📋 Table of Contents
-- [Description](#description)
-- [Technologies](#technologies)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
-- [API Documentation](#api-documentation)
+## 🚀 Features
 
-## 📖 Description
-This platform facilitates the job insertion of coders by centralizing vacancy publications and tracking applications. It allows:
-- **Gestors** (Managers) to publish and manage vacancies.
-- **Coders** to register, explore, and apply to vacancies.
-- **Admins** to oversee the entire system.
+### Backend (NestJS)
+*   **Modular Architecture**: Organized into `Auth`, `Users`, `Vacancies`, and `Applications` modules.
+*   **Database Integration**: Tech stack includes **TypeORM** and **PostgreSQL** (compatible with Supabase).
+*   **Authentication & Security**:
+    *   **JWT Strategies**: Secure user sessions.
+    *   **API Key**: Additional layer for sensitive endpoints.
+    *   **RBAC**: Custom Guards (`RolesGuard`) and Decorators (`@Roles`) for Admin, Gestor, and Coder permissions.
+    *   **Password Hashing**: Implemented with BCrypt.
+*   **Business Logic**:
+    *   **Vacancies**: CRUD operations restricted to Managers/Admins, with Applicant limits.
+    *   **Applications**: Coder application flow with duplicate checks and strict limits (max 3 active applications).
+*   **Validation**: Robust DTOs using `class-validator`.
+*   **Docs**: Auto-generated **Swagger** documentation.
 
-## 🛠 Technologies
-- **Framework**: [NestJS](https://nestjs.com/)
-- **Language**: TypeScript
-- **Database**: PostgreSQL (via [Supabase](https://supabase.com/))
-- **ORM**: [TypeORM](https://typeorm.io/)
-- **Documentation**: Swagger
-- **Validation**: class-validator & class-transformer
+### Frontend
+*   **Client**: Simple HTML/JS client located in `client/` directory.
+*   **UI**: Styled with **TailwindCSS**.
+*   **Capabilities**: Login/Register, View Vacancies, Apply (as Coder), Create Vacancy (as Manager).
+
+## 🛠️ Tech Stack
+*   **Framework**: [NestJS](https://nestjs.com/)
+*   **Language**: TypeScript
+*   **Database**: PostgreSQL / Supabase
+*   **ORM**: TypeORM
+*   **Frontend**: HTML5, Vanilla JS, TailwindCSS
 
 ## 📂 Project Structure
-The project follows a modular architecture:
 
-```
+```bash
 src/
-├── app.module.ts        # Root module
-├── main.ts              # Entry point
-├── auth/                # Authentication module (JWT, API Key)
-├── users/               # Users management (Coders, Admins, Gestors)
-├── vacancies/           # Vacancies management
-└── applications/        # Applications management
+├── auth/           # Authentication logic (strategies, guards, decorators)
+├── users/          # User management
+├── vacancies/      # Vacancy CRUD and logic
+├── applications/   # Application handling and business rules
+├── database/       # Seeders
+├── common/         # Global interceptors and filters
+└── main.ts         # Entry point (Swagger & CORS setup)
+client/             # Frontend application
 ```
 
-## 🚀 Getting Started
+## ⚡ Getting Started
 
-### Prerequisites
-- Node.js (v18 or higher)
-- npm
-- A generic PostgreSQL database or Supabase project
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd PlataformaPostulaciones
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Configure environment variables (see [.env.example](.env.example)):
-   ```bash
-   cp .env.example .env
-   # Update .env with your credentials
-   ```
-
-4. Run the project:
-   ```bash
-   # Development
-   npm run start:dev
-
-   # Watch mode
-   npm run start:dev
-   ```
-
-## 🔐 Environment Variables
-Create a `.env` file in the root directory with the following variables:
-
-```env
-PORT=3000
-DB_HOST=your_db_host
-DB_PORT=5432
-DB_USERNAME=your_db_user
-DB_PASSWORD=your_db_password
-DB_NAME=your_db_name
-JWT_SECRET=your_jwt_secret
-API_KEY=your_api_key
+### 1. Installation
+Clone the repository and install dependencies:
+```bash
+npm install
 ```
 
-## 📚 API Documentation
-Once the server is running, access the Swagger documentation at:
+### 2. Environment Configuration
+Create a `.env` file in the root directory. You can use `.env.example` as a reference:
+```bash
+cp .env.example .env
+```
+Ensure you provide a valid `DB_URL` (PostgreSQL connection string) or fill in the individual DB fields.
+
+### 3. Database Seeding
+To initialize the database with default users (Admin & Manager):
+```bash
+npm run seed
+```
+*   **Admin**: `admin@riwi.io` / `admin123`
+*   **Gestor**: `gestor@riwi.io` / `gestor123`
+
+### 4. Running the Application
+Start the development server:
+```bash
+npm run start:dev
+```
+ The API will be running at `http://localhost:3000/api`.
+
+### 5. Running the Frontend
+Simply open the `client/index.html` file in your preferred browser.
+*Note: Ensure the backend is running first.*
+
+## 📚 Documentation
+Interactive API documentation via Swagger is available at:
 `http://localhost:3000/api/docs`
+
+## 🧪 Testing
+Run unit tests for services:
+```bash
+npm run test
+```

@@ -26,25 +26,17 @@ import { TechnologiesModule } from './technologies/technologies.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        const dbUrl = configService.get<string>('DB_URL');
-        return {
-          type: 'postgres',
-          url: dbUrl,
-          host: configService.get<string>('DB_HOST') || configService.get<string>('DATABASE_HOST'),
-          port: parseInt(configService.get<string>('DB_PORT') || '5432'),
-          username: configService.get<string>('DB_USERNAME'),
-          password: configService.get<string>('DB_PASSWORD'),
-          database: configService.get<string>('DB_NAME') || configService.get<string>('DB_DATABASE'),
-          entities: [__dirname + '/**/*.entity{.ts,.js}'],
-          synchronize: true, // Auto-create tables (Dev only)
-          autoLoadEntities: true,
-          ssl: {
-            rejectUnauthorized: false, // Required for Supabase
-          },
-        };
-      },
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        url: configService.get<string>('DB_URL'),
+        autoLoadEntities: true,
+        synchronize: true, //  Solo para desarrollo
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      }),
     }),
+
     AuthModule,
     UsersModule,
     VacanciesModule,
